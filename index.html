@@ -136,6 +136,7 @@
             padding: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             transition: transform 0.2s;
+            position: relative;
         }
 
         .product-card:hover {
@@ -153,6 +154,13 @@
             color: #666;
             font-size: 14px;
             margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .product-title {
@@ -172,7 +180,25 @@
         .shipping-price {
             font-size: 14px;
             color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stock-info {
+            font-size: 14px;
             margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .stock-available {
+            color: #28a745;
+        }
+
+        .stock-low {
+            color: #ffc107;
+        }
+
+        .stock-out {
+            color: #dc3545;
         }
 
         .add-to-cart {
@@ -190,7 +216,34 @@
             background-color: #e68900;
         }
 
-        /* Cart Modal */
+        .add-to-cart:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .out-of-stock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(220, 53, 69, 0.1);
+            border: 2px dashed #dc3545;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .out-of-stock-text {
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -267,24 +320,113 @@
 
         .admin-form {
             display: grid;
-            gap: 10px;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             margin-bottom: 15px;
         }
 
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
         .admin-form input, .admin-form select {
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 14px;
         }
 
         .admin-form button {
             background-color: #28a745;
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 12px 20px;
             border-radius: 4px;
             cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .admin-form button:hover {
+            background-color: #218838;
+        }
+
+        .image-upload {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .image-preview {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stock-management {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .stock-management h3 {
+            margin: 0;
+            color: #495057;
+        }
+
+        .stock-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .stock-controls select {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .stock-controls input {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stock-controls button {
+            padding: 5px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .restock-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .restock-btn:hover {
+            background-color: #218838;
         }
 
         .hidden {
@@ -358,6 +500,16 @@
             font-size: 14px;
         }
 
+        .empty-store {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .empty-store h2 {
+            margin-bottom: 10px;
+        }
+
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -372,6 +524,10 @@
             
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -407,16 +563,40 @@
         <div id="adminPanel" class="admin-panel hidden">
             <h2>Panel de Administración</h2>
             <div class="admin-form">
-                <input type="text" id="productName" placeholder="Nombre del producto">
-                <select id="productCategory">
-                    <option value="camisetas">Camiseta</option>
-                    <option value="chandals">Chandal</option>
-                    <option value="abrigos">Abrigo</option>
-                </select>
-                <input type="number" id="productPrice" placeholder="Precio (€)" step="0.01">
-                <input type="text" id="productImage" placeholder="URL de imagen (opcional)">
+                <div class="form-row">
+                    <input type="text" id="productName" placeholder="Nombre del producto" required>
+                    <select id="productCategory" required>
+                        <option value="camisetas">Camiseta</option>
+                        <option value="chandals">Chandal</option>
+                        <option value="abrigos">Abrigo</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <input type="number" id="productPrice" placeholder="Precio (€)" step="0.01" min="0" required>
+                    <input type="number" id="productStock" placeholder="Stock inicial" min="0" required>
+                </div>
+                <div class="image-upload">
+                    <label for="productImage">Imagen del producto:</label>
+                    <input type="file" id="productImage" accept="image/*" onchange="previewImage(this)">
+                    <div class="image-preview" id="imagePreview">
+                        Selecciona una imagen
+                    </div>
+                </div>
                 <button onclick="addProduct()">Agregar Producto</button>
             </div>
+            
+            <!-- Stock Management -->
+            <div class="stock-management">
+                <h3>Gestión de Stock:</h3>
+                <div class="stock-controls">
+                    <select id="stockProductSelect">
+                        <option value="">Seleccionar producto...</option>
+                    </select>
+                    <input type="number" id="stockAmount" placeholder="Cantidad" min="1">
+                    <button class="restock-btn" onclick="restockProduct()">Reabastecer</button>
+                </div>
+            </div>
+            
             <p><strong>Nota:</strong> Haz clic en cualquier producto para eliminarlo</p>
         </div>
 
@@ -470,55 +650,12 @@
         const ADMIN_PASSWORD = "PAOS202505021114";
         let isAdminAuthenticated = false;
         
-        let products = [
-            {
-                id: 1,
-                name: "Camiseta Real Madrid 2024",
-                category: "camisetas",
-                price: 89.99,
-                image: "https://via.placeholder.com/250x200/ffffff/000000?text=Real+Madrid+2024"
-            },
-            {
-                id: 2,
-                name: "Camiseta FC Barcelona 2024",
-                category: "camisetas",
-                price: 89.99,
-                image: "https://via.placeholder.com/250x200/004d98/ffffff?text=FC+Barcelona"
-            },
-            {
-                id: 3,
-                name: "Chandal Manchester United",
-                category: "chandals",
-                price: 124.99,
-                image: "https://via.placeholder.com/250x200/da020e/ffffff?text=Man+United"
-            },
-            {
-                id: 4,
-                name: "Abrigo Bayern Munich",
-                category: "abrigos",
-                price: 159.99,
-                image: "https://via.placeholder.com/250x200/dc052d/ffffff?text=Bayern+Munich"
-            },
-            {
-                id: 5,
-                name: "Camiseta Atlético Madrid",
-                category: "camisetas",
-                price: 79.99,
-                image: "https://via.placeholder.com/250x200/ce3524/ffffff?text=Atletico+Madrid"
-            },
-            {
-                id: 6,
-                name: "Chandal Chelsea FC",
-                category: "chandals",
-                price: 119.99,
-                image: "https://via.placeholder.com/250x200/034694/ffffff?text=Chelsea+FC"
-            }
-        ];
-
+        // Inicializar con array vacío - solo tus productos aparecerán
+        let products = [];
         let cart = [];
         let currentFilter = 'todos';
         let isAdminMode = false;
-        const SHIPPING_COST = 4.99; // Coste de envío por producto
+        const SHIPPING_COST = 4.99;
 
         // Inicializar la aplicación
         document.addEventListener('DOMContentLoaded', function() {
@@ -526,6 +663,7 @@
             updateCartDisplay();
             initPaymentMethods();
             initPasswordModal();
+            updateStockProductSelect();
         });
 
         // Funciones de autenticación
@@ -554,7 +692,6 @@
                 document.getElementById('adminPassword').value = '';
                 document.getElementById('adminPassword').focus();
                 
-                // Limpiar mensaje de error después de 3 segundos
                 setTimeout(() => {
                     document.getElementById('passwordError').textContent = '';
                 }, 3000);
@@ -562,14 +699,12 @@
         }
 
         function initPasswordModal() {
-            // Permitir usar Enter para validar la contraseña
             document.getElementById('adminPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     validatePassword();
                 }
             });
 
-            // Cerrar modal al hacer clic fuera
             window.addEventListener('click', function(e) {
                 const modal = document.getElementById('passwordModal');
                 if (e.target === modal) {
@@ -578,25 +713,83 @@
             });
         }
 
+        // Previsualizar imagen
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.innerHTML = 'Selecciona una imagen';
+            }
+        }
+
+        // Obtener stock status
+        function getStockStatus(stock) {
+            if (stock === 0) return 'out';
+            if (stock <= 5) return 'low';
+            return 'available';
+        }
+
         // Mostrar productos
         function displayProducts() {
             const container = document.getElementById('productsContainer');
+            
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-store">
+                        <h2>🏪 Tu tienda está vacía</h2>
+                        <p>Usa el panel de administración para agregar tus productos</p>
+                    </div>
+                `;
+                return;
+            }
+
             const filteredProducts = currentFilter === 'todos' ? 
                 products : products.filter(p => p.category === currentFilter);
 
-            container.innerHTML = filteredProducts.map(product => `
-                <div class="product-card" ${isAdminMode ? `onclick="removeProduct(${product.id})"` : ''} 
-                     style="${isAdminMode ? 'cursor: pointer; border: 2px dashed #dc3545;' : ''}">
-                    <div class="product-image" style="background-image: url('${product.image}'); background-size: cover; background-position: center;">
-                        ${!product.image ? 'Imagen del producto' : ''}
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-store">
+                        <h2>😔 No hay productos en esta categoría</h2>
+                        <p>Prueba con otra categoría o agrega nuevos productos</p>
                     </div>
-                    <div class="product-title">${product.name}</div>
-                    <div class="product-price">€${product.price.toFixed(2)}</div>
-                    <div class="shipping-price">+ €${SHIPPING_COST} envío</div>
-                    ${!isAdminMode ? `<button class="add-to-cart" onclick="addToCart(${product.id})">Añadir al carrito</button>` : 
-                      '<p style="color: #dc3545; font-size: 12px;">Clic para eliminar</p>'}
-                </div>
-            `).join('');
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredProducts.map(product => {
+                const stockStatus = getStockStatus(product.stock);
+                const isOutOfStock = stockStatus === 'out';
+                
+                return `
+                    <div class="product-card" ${isAdminMode ? `onclick="removeProduct(${product.id})"` : ''} 
+                         style="${isAdminMode ? 'cursor: pointer; border: 2px dashed #dc3545;' : ''}">
+                        ${isOutOfStock ? '<div class="out-of-stock-overlay"><div class="out-of-stock-text">SIN STOCK</div></div>' : ''}
+                        <div class="product-image">
+                            ${product.image ? `<img src="${product.image}" alt="${product.name}">` : 'Sin imagen'}
+                        </div>
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">€${product.price.toFixed(2)}</div>
+                        <div class="shipping-price">+ €${SHIPPING_COST} envío</div>
+                        <div class="stock-info ${stockStatus === 'available' ? 'stock-available' : stockStatus === 'low' ? 'stock-low' : 'stock-out'}">
+                            ${isOutOfStock ? 'Sin stock' : stockStatus === 'low' ? `¡Solo quedan ${product.stock}!` : `En stock (${product.stock})`}
+                        </div>
+                        ${!isAdminMode ? 
+                            `<button class="add-to-cart" ${isOutOfStock ? 'disabled' : ''} onclick="addToCart(${product.id})" ${isOutOfStock ? '' : ''}>
+                                ${isOutOfStock ? 'Sin stock' : 'Añadir al carrito'}
+                            </button>` : 
+                            '<p style="color: #dc3545; font-size: 12px;">Clic para eliminar</p>'
+                        }
+                    </div>
+                `;
+            }).join('');
         }
 
         // Filtrar productos por categoría
@@ -604,7 +797,6 @@
             currentFilter = category;
             displayProducts();
             
-            // Actualizar botones activos
             document.querySelectorAll('.categories button').forEach(btn => {
                 btn.classList.remove('active');
             });
@@ -616,28 +808,66 @@
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const container = document.getElementById('productsContainer');
             
+            if (!searchTerm) {
+                displayProducts();
+                return;
+            }
+            
             const filteredProducts = products.filter(product => 
                 product.name.toLowerCase().includes(searchTerm) ||
                 product.category.toLowerCase().includes(searchTerm)
             );
 
-            container.innerHTML = filteredProducts.map(product => `
-                <div class="product-card">
-                    <div class="product-image" style="background-image: url('${product.image}'); background-size: cover; background-position: center;">
-                        ${!product.image ? 'Imagen del producto' : ''}
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-store">
+                        <h2>🔍 No se encontraron productos</h2>
+                        <p>No hay productos que coincidan con "${searchTerm}"</p>
                     </div>
-                    <div class="product-title">${product.name}</div>
-                    <div class="product-price">€${product.price.toFixed(2)}</div>
-                    <div class="shipping-price">+ €${SHIPPING_COST} envío</div>
-                    <button class="add-to-cart" onclick="addToCart(${product.id})">Añadir al carrito</button>
-                </div>
-            `).join('');
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredProducts.map(product => {
+                const stockStatus = getStockStatus(product.stock);
+                const isOutOfStock = stockStatus === 'out';
+                
+                return `
+                    <div class="product-card">
+                        ${isOutOfStock ? '<div class="out-of-stock-overlay"><div class="out-of-stock-text">SIN STOCK</div></div>' : ''}
+                        <div class="product-image">
+                            ${product.image ? `<img src="${product.image}" alt="${product.name}">` : 'Sin imagen'}
+                        </div>
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">€${product.price.toFixed(2)}</div>
+                        <div class="shipping-price">+ €${SHIPPING_COST} envío</div>
+                        <div class="stock-info ${stockStatus === 'available' ? 'stock-available' : stockStatus === 'low' ? 'stock-low' : 'stock-out'}">
+                            ${isOutOfStock ? 'Sin stock' : stockStatus === 'low' ? `¡Solo quedan ${product.stock}!` : `En stock (${product.stock})`}
+                        </div>
+                        <button class="add-to-cart" ${isOutOfStock ? 'disabled' : ''} onclick="addToCart(${product.id})">
+                            ${isOutOfStock ? 'Sin stock' : 'Añadir al carrito'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
         }
 
         // Añadir producto al carrito
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
+            
+            if (!product || product.stock === 0) {
+                alert('Este producto no está disponible');
+                return;
+            }
+
             const existingItem = cart.find(item => item.id === productId);
+            const currentQuantityInCart = existingItem ? existingItem.quantity : 0;
+            
+            if (currentQuantityInCart >= product.stock) {
+                alert(`Solo tenemos ${product.stock} unidades disponibles`);
+                return;
+            }
 
             if (existingItem) {
                 existingItem.quantity += 1;
@@ -648,11 +878,16 @@
             updateCartDisplay();
             
             // Animación de confirmación
-            event.target.style.backgroundColor = '#28a745';
-            event.target.textContent = '¡Añadido!';
+            const button = event.target;
+            const originalText = button.textContent;
+            const originalColor = button.style.backgroundColor;
+            
+            button.style.backgroundColor = '#28a745';
+            button.textContent = '¡Añadido!';
+            
             setTimeout(() => {
-                event.target.style.backgroundColor = '#ff9900';
-                event.target.textContent = 'Añadir al carrito';
+                button.style.backgroundColor = originalColor;
+                button.textContent = originalText;
             }, 1000);
         }
 
@@ -689,183 +924,9 @@
             let shippingTotal = 0;
 
             container.innerHTML = cart.map(item => {
+                const product = products.find(p => p.id === item.id);
+                const maxQuantity = product ? product.stock : 0;
                 const itemTotal = item.price * item.quantity;
                 const itemShipping = SHIPPING_COST * item.quantity;
                 subtotal += itemTotal;
-                shippingTotal += itemShipping;
-
-                return `
-                    <div class="cart-item">
-                        <div>
-                            <strong>${item.name}</strong><br>
-                            €${item.price.toFixed(2)} x ${item.quantity} = €${itemTotal.toFixed(2)}<br>
-                            <small>Envío: €${itemShipping.toFixed(2)}</small>
-                        </div>
-                        <div>
-                            <button onclick="changeQuantity(${item.id}, -1)" style="margin-right: 5px;">-</button>
-                            <span>${item.quantity}</span>
-                            <button onclick="changeQuantity(${item.id}, 1)" style="margin-left: 5px;">+</button>
-                            <button onclick="removeFromCart(${item.id})" style="margin-left: 10px; background-color: #dc3545; color: white; border: none; padding: 2px 6px; border-radius: 2px;">🗑️</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            const total = subtotal + shippingTotal;
-            document.getElementById('subtotal').textContent = subtotal.toFixed(2);
-            document.getElementById('shippingTotal').textContent = shippingTotal.toFixed(2);
-            document.getElementById('total').textContent = total.toFixed(2);
-        }
-
-        // Cambiar cantidad
-        function changeQuantity(productId, change) {
-            const item = cart.find(item => item.id === productId);
-            if (item) {
-                item.quantity += change;
-                if (item.quantity <= 0) {
-                    removeFromCart(productId);
-                } else {
-                    updateCartDisplay();
-                    displayCartItems();
-                }
-            }
-        }
-
-        // Eliminar del carrito
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCartDisplay();
-            displayCartItems();
-        }
-
-        // Panel de administración
-        function toggleAdmin() {
-            if (!isAdminAuthenticated) {
-                showPasswordModal();
-                return;
-            }
-            
-            isAdminMode = !isAdminMode;
-            const panel = document.getElementById('adminPanel');
-            panel.classList.toggle('hidden');
-            displayProducts();
-        }
-
-        // Agregar producto
-        function addProduct() {
-            const name = document.getElementById('productName').value;
-            const category = document.getElementById('productCategory').value;
-            const price = parseFloat(document.getElementById('productPrice').value);
-            const image = document.getElementById('productImage').value;
-
-            if (!name || !price) {
-                alert('Por favor, completa al menos el nombre y el precio');
-                return;
-            }
-
-            const newProduct = {
-                id: Date.now(),
-                name: name,
-                category: category,
-                price: price,
-                image: image || ''
-            };
-
-            products.push(newProduct);
-            displayProducts();
-
-            // Limpiar formulario
-            document.getElementById('productName').value = '';
-            document.getElementById('productPrice').value = '';
-            document.getElementById('productImage').value = '';
-
-            alert('Producto agregado correctamente');
-        }
-
-        // Eliminar producto
-        function removeProduct(productId) {
-            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-                products = products.filter(p => p.id !== productId);
-                displayProducts();
-                alert('Producto eliminado');
-            }
-        }
-
-        // Métodos de pago
-        function initPaymentMethods() {
-            document.querySelectorAll('.payment-method').forEach(method => {
-                method.addEventListener('click', function() {
-                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-                    this.classList.add('selected');
-                    
-                    const paymentInfo = document.getElementById('paymentInfo');
-                    const method = this.dataset.method;
-                    
-                    switch(method) {
-                        case 'card':
-                            paymentInfo.textContent = 'Pago seguro con tarjeta de crédito o débito';
-                            break;
-                        case 'paypal':
-                            paymentInfo.textContent = 'Serás redirigido a PayPal para completar el pago';
-                            break;
-                        case 'transfer':
-                            paymentInfo.textContent = 'Te enviaremos los datos bancarios por email';
-                            break;
-                    }
-                });
-            });
-        }
-
-        // Procesar pago
-        function processPayment() {
-            if (cart.length === 0) {
-                alert('Tu carrito está vacío');
-                return;
-            }
-
-            const selectedMethod = document.querySelector('.payment-method.selected').dataset.method;
-            const total = document.getElementById('total').textContent;
-
-            let message = `¡Pedido confirmado por €${total}!\n\n`;
-            message += `Productos:\n`;
-            
-            cart.forEach(item => {
-                message += `- ${item.name} x${item.quantity} = €${(item.price * item.quantity).toFixed(2)}\n`;
-            });
-            
-            message += `\nEnvío: €${document.getElementById('shippingTotal').textContent}`;
-            message += `\nTotal: €${total}`;
-            
-            switch(selectedMethod) {
-                case 'card':
-                    message += '\n\n🔒 Proceso de pago con tarjeta iniciado...';
-                    break;
-                case 'paypal':
-                    message += '\n\n🅿️ Redirigiendo a PayPal...';
-                    break;
-                case 'transfer':
-                    message += '\n\n🏦 Te enviaremos los datos bancarios por email';
-                    break;
-            }
-
-            alert(message);
-            
-            // Simular proceso de pago exitoso
-            setTimeout(() => {
-                alert('¡Pago procesado con éxito! Recibirás un email de confirmación.');
-                cart = [];
-                updateCartDisplay();
-                closeCart();
-            }, 2000);
-        }
-
-        // Cerrar modal al hacer clic fuera
-        window.onclick = function(event) {
-            const cartModal = document.getElementById('cartModal');
-            if (event.target === cartModal) {
-                closeCart();
-            }
-        }
-    </script>
-</body>
-</html>
+                shippingTotal +=
