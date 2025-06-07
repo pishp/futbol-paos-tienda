@@ -977,4 +977,9 @@
                 return `
                     <div class="product-card" ${isAdminMode ? `onclick="removeProduct(${product.id})"` : ''} 
                          style="${isAdminMode ? 'cursor: pointer; border: 2px dashed #dc3545;' : ''}">
-                        ${isOutOf
+                        ${isOutOfStock ? `
+                            <div class="out-of-stock-overlay">
+                                <div class="out-of-stock-text">AGOTADO</div>
+                            </div>
+                        ` : ''}
+                        <div class
