@@ -81,6 +81,20 @@
             color: white;
         }
 
+        .access-btn {
+            background-color: #6c757d;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+            color: white;
+        }
+
+        .access-btn:hover {
+            background-color: #5a6268;
+        }
+
         /* Categories */
         .categories {
             background-color: #37475a;
@@ -199,6 +213,16 @@
             overflow-y: auto;
         }
 
+        .password-modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+
         .close {
             color: #aaa;
             float: right;
@@ -300,6 +324,40 @@
             background-color: #fff3cd;
         }
 
+        .password-form {
+            margin-top: 15px;
+        }
+
+        .password-form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .password-form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .password-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: #dc3545;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -327,7 +385,8 @@
             <button onclick="searchProducts()">🔍</button>
         </div>
         <div class="cart-info">
-            <button class="admin-btn" onclick="toggleAdmin()">Admin</button>
+            <button id="accessAdminBtn" class="access-btn" onclick="showPasswordModal()">🔐 Acceso Admin</button>
+            <button id="adminBtn" class="admin-btn hidden" onclick="toggleAdmin()">Admin</button>
             <div class="cart" onclick="openCart()">
                 🛒 Carrito (<span id="cartCount">0</span>)
             </div>
@@ -393,8 +452,24 @@
         </div>
     </div>
 
+    <!-- Password Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="password-modal-content">
+            <span class="close" onclick="hidePasswordModal()">&times;</span>
+            <h3>🔐 Acceso de Administrador</h3>
+            <div class="password-form">
+                <input type="password" id="adminPassword" placeholder="Introduce la contraseña">
+                <button onclick="validatePassword()">Acceder</button>
+                <div id="passwordError" class="error-message"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Variables globales
+        const ADMIN_PASSWORD = "PAOS202505021114";
+        let isAdminAuthenticated = false;
+        
         let products = [
             {
                 id: 1,
@@ -450,7 +525,58 @@
             displayProducts();
             updateCartDisplay();
             initPaymentMethods();
+            initPasswordModal();
         });
+
+        // Funciones de autenticación
+        function showPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'block';
+            document.getElementById('adminPassword').focus();
+            document.getElementById('passwordError').textContent = '';
+        }
+
+        function hidePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('passwordError').textContent = '';
+        }
+
+        function validatePassword() {
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                isAdminAuthenticated = true;
+                document.getElementById('accessAdminBtn').classList.add('hidden');
+                document.getElementById('adminBtn').classList.remove('hidden');
+                hidePasswordModal();
+            } else {
+                document.getElementById('passwordError').textContent = 'Contraseña incorrecta';
+                document.getElementById('adminPassword').value = '';
+                document.getElementById('adminPassword').focus();
+                
+                // Limpiar mensaje de error después de 3 segundos
+                setTimeout(() => {
+                    document.getElementById('passwordError').textContent = '';
+                }, 3000);
+            }
+        }
+
+        function initPasswordModal() {
+            // Permitir usar Enter para validar la contraseña
+            document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    validatePassword();
+                }
+            });
+
+            // Cerrar modal al hacer clic fuera
+            window.addEventListener('click', function(e) {
+                const modal = document.getElementById('passwordModal');
+                if (e.target === modal) {
+                    hidePasswordModal();
+                }
+            });
+        }
 
         // Mostrar productos
         function displayProducts() {
@@ -614,6 +740,11 @@
 
         // Panel de administración
         function toggleAdmin() {
+            if (!isAdminAuthenticated) {
+                showPasswordModal();
+                return;
+            }
+            
             isAdminMode = !isAdminMode;
             const panel = document.getElementById('adminPanel');
             panel.classList.toggle('hidden');
@@ -730,8 +861,8 @@
 
         // Cerrar modal al hacer clic fuera
         window.onclick = function(event) {
-            const modal = document.getElementById('cartModal');
-            if (event.target === modal) {
+            const cartModal = document.getElementById('cartModal');
+            if (event.target === cartModal) {
                 closeCart();
             }
         }
