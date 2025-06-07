@@ -81,20 +81,6 @@
             color: white;
         }
 
-        .access-btn {
-            background-color: #6c757d;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            border: none;
-            color: white;
-        }
-
-        .access-btn:hover {
-            background-color: #5a6268;
-        }
-
         /* Categories */
         .categories {
             background-color: #37475a;
@@ -136,7 +122,6 @@
             padding: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             transition: transform 0.2s;
-            position: relative;
         }
 
         .product-card:hover {
@@ -154,13 +139,6 @@
             color: #666;
             font-size: 14px;
             margin-bottom: 10px;
-            overflow: hidden;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .product-title {
@@ -180,25 +158,7 @@
         .shipping-price {
             font-size: 14px;
             color: #666;
-            margin-bottom: 5px;
-        }
-
-        .stock-info {
-            font-size: 14px;
             margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .stock-available {
-            color: #28a745;
-        }
-
-        .stock-low {
-            color: #ffc107;
-        }
-
-        .stock-out {
-            color: #dc3545;
         }
 
         .add-to-cart {
@@ -216,34 +176,7 @@
             background-color: #e68900;
         }
 
-        .add-to-cart:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .out-of-stock-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(220, 53, 69, 0.1);
-            border: 2px dashed #dc3545;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-        }
-
-        .out-of-stock-text {
-            background-color: #dc3545;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        /* Modal */
+        /* Cart Modal */
         .modal {
             display: none;
             position: fixed;
@@ -266,16 +199,6 @@
             overflow-y: auto;
         }
 
-        .password-modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 400px;
-            position: relative;
-        }
-
         .close {
             color: #aaa;
             float: right;
@@ -294,33 +217,6 @@
             align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #eee;
-        }
-
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .quantity-btn {
-            background-color: #ff9900;
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .remove-item {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
         }
 
         .checkout-btn {
@@ -347,113 +243,24 @@
 
         .admin-form {
             display: grid;
-            gap: 15px;
+            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             margin-bottom: 15px;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-        }
-
         .admin-form input, .admin-form select {
-            padding: 10px;
+            padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 14px;
         }
 
         .admin-form button {
             background-color: #28a745;
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .admin-form button:hover {
-            background-color: #218838;
-        }
-
-        .image-upload {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .image-preview {
-            width: 150px;
-            height: 150px;
-            border: 2px dashed #ddd;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 14px;
-            overflow: hidden;
-        }
-
-        .image-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .stock-management {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 4px;
-        }
-
-        .stock-management h3 {
-            margin: 0;
-            color: #495057;
-        }
-
-        .stock-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .stock-controls select {
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .stock-controls input {
-            width: 80px;
-            padding: 5px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            text-align: center;
-        }
-
-        .stock-controls button {
-            padding: 5px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .restock-btn {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .restock-btn:hover {
-            background-color: #218838;
         }
 
         .hidden {
@@ -493,66 +300,6 @@
             background-color: #fff3cd;
         }
 
-        .password-form {
-            margin-top: 15px;
-        }
-
-        .password-form input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-
-        .password-form button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-        }
-
-        .password-form button:hover {
-            background-color: #0056b3;
-        }
-
-        .error-message {
-            color: #dc3545;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        .success-message {
-            color: #28a745;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        .empty-store {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-            grid-column: 1 / -1;
-        }
-
-        .empty-store h2 {
-            margin-bottom: 10px;
-        }
-
-        .admin-mode-indicator {
-            background-color: #dc3545;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -568,10 +315,6 @@
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
@@ -584,8 +327,7 @@
             <button onclick="searchProducts()">🔍</button>
         </div>
         <div class="cart-info">
-            <button id="accessAdminBtn" class="access-btn" onclick="showPasswordModal()">🔐 Acceso Admin</button>
-            <button id="adminBtn" class="admin-btn hidden" onclick="toggleAdmin()">Admin</button>
+            <button class="admin-btn" onclick="toggleAdmin()">Admin</button>
             <div class="cart" onclick="openCart()">
                 🛒 Carrito (<span id="cartCount">0</span>)
             </div>
@@ -602,49 +344,21 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Admin Mode Indicator -->
-        <div id="adminModeIndicator" class="admin-mode-indicator hidden">
-            🔧 MODO ADMINISTRADOR ACTIVO - Haz clic en cualquier producto para eliminarlo
-        </div>
-
         <!-- Admin Panel -->
         <div id="adminPanel" class="admin-panel hidden">
             <h2>Panel de Administración</h2>
             <div class="admin-form">
-                <div class="form-row">
-                    <input type="text" id="productName" placeholder="Nombre del producto" required>
-                    <select id="productCategory" required>
-                        <option value="camisetas">Camiseta</option>
-                        <option value="chandals">Chandal</option>
-                        <option value="abrigos">Abrigo</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <input type="number" id="productPrice" placeholder="Precio (€)" step="0.01" min="0" required>
-                    <input type="number" id="productStock" placeholder="Stock inicial" min="0" required>
-                </div>
-                <div class="image-upload">
-                    <label for="productImage">Imagen del producto:</label>
-                    <input type="file" id="productImage" accept="image/*" onchange="previewImage(this)">
-                    <div class="image-preview" id="imagePreview">
-                        Selecciona una imagen
-                    </div>
-                </div>
+                <input type="text" id="productName" placeholder="Nombre del producto">
+                <select id="productCategory">
+                    <option value="camisetas">Camiseta</option>
+                    <option value="chandals">Chandal</option>
+                    <option value="abrigos">Abrigo</option>
+                </select>
+                <input type="number" id="productPrice" placeholder="Precio (€)" step="0.01">
+                <input type="text" id="productImage" placeholder="URL de imagen (opcional)">
                 <button onclick="addProduct()">Agregar Producto</button>
-                <div id="adminMessage"></div>
             </div>
-            
-            <!-- Stock Management -->
-            <div class="stock-management">
-                <h3>Gestión de Stock:</h3>
-                <div class="stock-controls">
-                    <select id="stockProductSelect">
-                        <option value="">Seleccionar producto...</option>
-                    </select>
-                    <input type="number" id="stockAmount" placeholder="Cantidad" min="1">
-                    <button class="restock-btn" onclick="restockProduct()">Reabastecer</button>
-                </div>
-            </div>
+            <p><strong>Nota:</strong> Haz clic en cualquier producto para eliminarlo</p>
         </div>
 
         <!-- Products Grid -->
@@ -679,307 +393,348 @@
         </div>
     </div>
 
-    <!-- Password Modal -->
-    <div id="passwordModal" class="modal">
-        <div class="password-modal-content">
-            <span class="close" onclick="hidePasswordModal()">&times;</span>
-            <h3>🔐 Acceso de Administrador</h3>
-            <div class="password-form">
-                <input type="password" id="adminPassword" placeholder="Introduce la contraseña">
-                <button onclick="validatePassword()">Acceder</button>
-                <div id="passwordError" class="error-message"></div>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Variables globales
-        const ADMIN_PASSWORD = "PAOS202505021114";
-        let isAdminAuthenticated = false;
-        
-        // Array de productos - COMPLETAMENTE VACÍO al inicio
-        let products = [];
+        let products = [
+            {
+                id: 1,
+                name: "Camiseta Real Madrid 2024",
+                category: "camisetas",
+                price: 89.99,
+                image: "https://via.placeholder.com/250x200/ffffff/000000?text=Real+Madrid+2024"
+            },
+            {
+                id: 2,
+                name: "Camiseta FC Barcelona 2024",
+                category: "camisetas",
+                price: 89.99,
+                image: "https://via.placeholder.com/250x200/004d98/ffffff?text=FC+Barcelona"
+            },
+            {
+                id: 3,
+                name: "Chandal Manchester United",
+                category: "chandals",
+                price: 124.99,
+                image: "https://via.placeholder.com/250x200/da020e/ffffff?text=Man+United"
+            },
+            {
+                id: 4,
+                name: "Abrigo Bayern Munich",
+                category: "abrigos",
+                price: 159.99,
+                image: "https://via.placeholder.com/250x200/dc052d/ffffff?text=Bayern+Munich"
+            },
+            {
+                id: 5,
+                name: "Camiseta Atlético Madrid",
+                category: "camisetas",
+                price: 79.99,
+                image: "https://via.placeholder.com/250x200/ce3524/ffffff?text=Atletico+Madrid"
+            },
+            {
+                id: 6,
+                name: "Chandal Chelsea FC",
+                category: "chandals",
+                price: 119.99,
+                image: "https://via.placeholder.com/250x200/034694/ffffff?text=Chelsea+FC"
+            }
+        ];
+
         let cart = [];
         let currentFilter = 'todos';
         let isAdminMode = false;
-        let nextProductId = 1;
-        const SHIPPING_COST = 4.99;
+        const SHIPPING_COST = 4.99; // Coste de envío por producto
 
         // Inicializar la aplicación
         document.addEventListener('DOMContentLoaded', function() {
             displayProducts();
             updateCartDisplay();
             initPaymentMethods();
-            initPasswordModal();
-            updateStockProductSelect();
         });
-
-        // Funciones de autenticación
-        function showPasswordModal() {
-            document.getElementById('passwordModal').style.display = 'block';
-            document.getElementById('adminPassword').focus();
-            document.getElementById('passwordError').textContent = '';
-        }
-
-        function hidePasswordModal() {
-            document.getElementById('passwordModal').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-            document.getElementById('passwordError').textContent = '';
-        }
-
-        function validatePassword() {
-            const password = document.getElementById('adminPassword').value;
-            
-            if (password === ADMIN_PASSWORD) {
-                isAdminAuthenticated = true;
-                document.getElementById('accessAdminBtn').classList.add('hidden');
-                document.getElementById('adminBtn').classList.remove('hidden');
-                hidePasswordModal();
-                showAdminMessage('¡Acceso concedido! Ahora puedes administrar la tienda.', 'success');
-            } else {
-                document.getElementById('passwordError').textContent = 'Contraseña incorrecta';
-                document.getElementById('adminPassword').value = '';
-                document.getElementById('adminPassword').focus();
-                
-                setTimeout(() => {
-                    document.getElementById('passwordError').textContent = '';
-                }, 3000);
-            }
-        }
-
-        function initPasswordModal() {
-            document.getElementById('adminPassword').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    validatePassword();
-                }
-            });
-
-            window.addEventListener('click', function(e) {
-                const modal = document.getElementById('passwordModal');
-                if (e.target === modal) {
-                    hidePasswordModal();
-                }
-                
-                const cartModal = document.getElementById('cartModal');
-                if (e.target === cartModal) {
-                    closeCart();
-                }
-            });
-        }
-
-        function toggleAdmin() {
-            if (!isAdminAuthenticated) {
-                showPasswordModal();
-                return;
-            }
-            
-            isAdminMode = !isAdminMode;
-            const panel = document.getElementById('adminPanel');
-            const indicator = document.getElementById('adminModeIndicator');
-            
-            if (isAdminMode) {
-                panel.classList.remove('hidden');
-                indicator.classList.remove('hidden');
-                document.getElementById('adminBtn').textContent = 'Salir Admin';
-                document.getElementById('adminBtn').style.backgroundColor = '#28a745';
-            } else {
-                panel.classList.add('hidden');
-                indicator.classList.add('hidden');
-                document.getElementById('adminBtn').textContent = 'Admin';
-                document.getElementById('adminBtn').style.backgroundColor = '#dc3545';
-            }
-            
-            displayProducts();
-            updateStockProductSelect();
-        }
-
-        // Previsualizar imagen
-        function previewImage(input) {
-            const preview = document.getElementById('imagePreview');
-            
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
-                }
-                
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                preview.innerHTML = 'Selecciona una imagen';
-            }
-        }
-
-        // Agregar producto
-        function addProduct() {
-            const name = document.getElementById('productName').value.trim();
-            const category = document.getElementById('productCategory').value;
-            const price = parseFloat(document.getElementById('productPrice').value);
-            const stock = parseInt(document.getElementById('productStock').value);
-            const imageFile = document.getElementById('productImage').files[0];
-
-            // Validaciones
-            if (!name) {
-                showAdminMessage('Por favor ingresa el nombre del producto', 'error');
-                return;
-            }
-            
-            if (isNaN(price) || price <= 0) {
-                showAdminMessage('Por favor ingresa un precio válido', 'error');
-                return;
-            }
-            
-            if (isNaN(stock) || stock < 0) {
-                showAdminMessage('Por favor ingresa un stock válido', 'error');
-                return;
-            }
-
-            const product = {
-                id: nextProductId++,
-                name: name,
-                category: category,
-                price: price,
-                stock: stock,
-                image: null
-            };
-
-            // Procesar imagen si existe
-            if (imageFile) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    product.image = e.target.result;
-                    finalizeAddProduct(product);
-                };
-                reader.readAsDataURL(imageFile);
-            } else {
-                finalizeAddProduct(product);
-            }
-        }
-
-        function finalizeAddProduct(product) {
-            products.push(product);
-            
-            // Limpiar formulario
-            document.getElementById('productName').value = '';
-            document.getElementById('productPrice').value = '';
-            document.getElementById('productStock').value = '';
-            document.getElementById('productImage').value = '';
-            document.getElementById('imagePreview').innerHTML = 'Selecciona una imagen';
-            
-            displayProducts();
-            updateStockProductSelect();
-            showAdminMessage(`Producto "${product.name}" agregado exitosamente`, 'success');
-        }
-
-        function showAdminMessage(message, type) {
-            const messageDiv = document.getElementById('adminMessage');
-            messageDiv.textContent = message;
-            messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
-            
-            setTimeout(() => {
-                messageDiv.textContent = '';
-                messageDiv.className = '';
-            }, 3000);
-        }
-
-        // Remover producto
-        function removeProduct(productId) {
-            if (!isAdminMode) return;
-            
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-            
-            if (confirm(`¿Estás seguro de que quieres eliminar "${product.name}"?`)) {
-                products = products.filter(p => p.id !== productId);
-                cart = cart.filter(item => item.id !== productId);
-                displayProducts();
-                updateCartDisplay();
-                updateStockProductSelect();
-                showAdminMessage(`Producto "${product.name}" eliminado`, 'success');
-            }
-        }
-
-        // Gestión de stock
-        function updateStockProductSelect() {
-            const select = document.getElementById('stockProductSelect');
-            select.innerHTML = '<option value="">Seleccionar producto...</option>';
-            
-            products.forEach(product => {
-                const option = document.createElement('option');
-                option.value = product.id;
-                option.textContent = `${product.name} (Stock actual: ${product.stock})`;
-                select.appendChild(option);
-            });
-        }
-
-        function restockProduct() {
-            const productId = parseInt(document.getElementById('stockProductSelect').value);
-            const amount = parseInt(document.getElementById('stockAmount').value);
-            
-            if (!productId) {
-                showAdminMessage('Selecciona un producto', 'error');
-                return;
-            }
-            
-            if (isNaN(amount) || amount <= 0) {
-                showAdminMessage('Ingresa una cantidad válida', 'error');
-                return;
-            }
-            
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                product.stock += amount;
-                document.getElementById('stockAmount').value = '';
-                displayProducts();
-                updateStockProductSelect();
-                showAdminMessage(`Stock actualizado: ${product.name} ahora tiene ${product.stock} unidades`, 'success');
-            }
-        }
-
-        // Obtener stock status
-        function getStockStatus(stock) {
-            if (stock === 0) return 'out';
-            if (stock <= 5) return 'low';
-            return 'available';
-        }
 
         // Mostrar productos
         function displayProducts() {
             const container = document.getElementById('productsContainer');
-            
-            if (products.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-store">
-                        <h2>🏪 Tu tienda está vacía</h2>
-                        <p>Usa el panel de administración para agregar tus productos</p>
-                    </div>
-                `;
-                return;
-            }
-
             const filteredProducts = currentFilter === 'todos' ? 
                 products : products.filter(p => p.category === currentFilter);
 
-            if (filteredProducts.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-store">
-                        <h2>😔 No hay productos en esta categoría</h2>
-                        <p>Prueba con otra categoría o agrega nuevos productos</p>
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" ${isAdminMode ? `onclick="removeProduct(${product.id})"` : ''} 
+                     style="${isAdminMode ? 'cursor: pointer; border: 2px dashed #dc3545;' : ''}">
+                    <div class="product-image" style="background-image: url('${product.image}'); background-size: cover; background-position: center;">
+                        ${!product.image ? 'Imagen del producto' : ''}
                     </div>
-                `;
+                    <div class="product-title">${product.name}</div>
+                    <div class="product-price">€${product.price.toFixed(2)}</div>
+                    <div class="shipping-price">+ €${SHIPPING_COST} envío</div>
+                    ${!isAdminMode ? `<button class="add-to-cart" onclick="addToCart(${product.id})">Añadir al carrito</button>` : 
+                      '<p style="color: #dc3545; font-size: 12px;">Clic para eliminar</p>'}
+                </div>
+            `).join('');
+        }
+
+        // Filtrar productos por categoría
+        function filterProducts(category) {
+            currentFilter = category;
+            displayProducts();
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.categories button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Buscar productos
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const container = document.getElementById('productsContainer');
+            
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.category.toLowerCase().includes(searchTerm)
+            );
+
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('${product.image}'); background-size: cover; background-position: center;">
+                        ${!product.image ? 'Imagen del producto' : ''}
+                    </div>
+                    <div class="product-title">${product.name}</div>
+                    <div class="product-price">€${product.price.toFixed(2)}</div>
+                    <div class="shipping-price">+ €${SHIPPING_COST} envío</div>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Añadir al carrito</button>
+                </div>
+            `).join('');
+        }
+
+        // Añadir producto al carrito
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+
+            updateCartDisplay();
+            
+            // Animación de confirmación
+            event.target.style.backgroundColor = '#28a745';
+            event.target.textContent = '¡Añadido!';
+            setTimeout(() => {
+                event.target.style.backgroundColor = '#ff9900';
+                event.target.textContent = 'Añadir al carrito';
+            }, 1000);
+        }
+
+        // Actualizar contador del carrito
+        function updateCartDisplay() {
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = cartCount;
+        }
+
+        // Abrir carrito
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'block';
+            displayCartItems();
+        }
+
+        // Cerrar carrito
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        // Mostrar items del carrito
+        function displayCartItems() {
+            const container = document.getElementById('cartItems');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p>Tu carrito está vacío</p>';
+                document.getElementById('subtotal').textContent = '0.00';
+                document.getElementById('shippingTotal').textContent = '0.00';
+                document.getElementById('total').textContent = '0.00';
                 return;
             }
 
-            container.innerHTML = filteredProducts.map(product => {
-                const stockStatus = getStockStatus(product.stock);
-                const isOutOfStock = stockStatus === 'out';
-                
+            let subtotal = 0;
+            let shippingTotal = 0;
+
+            container.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                const itemShipping = SHIPPING_COST * item.quantity;
+                subtotal += itemTotal;
+                shippingTotal += itemShipping;
+
                 return `
-                    <div class="product-card" ${isAdminMode ? `onclick="removeProduct(${product.id})"` : ''} 
-                         style="${isAdminMode ? 'cursor: pointer; border: 2px dashed #dc3545;' : ''}">
-                        ${isOutOfStock ? `
-                            <div class="out-of-stock-overlay">
-                                <div class="out-of-stock-text">AGOTADO</div>
-                            </div>
-                        ` : ''}
-                        <div class
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            €${item.price.toFixed(2)} x ${item.quantity} = €${itemTotal.toFixed(2)}<br>
+                            <small>Envío: €${itemShipping.toFixed(2)}</small>
+                        </div>
+                        <div>
+                            <button onclick="changeQuantity(${item.id}, -1)" style="margin-right: 5px;">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="changeQuantity(${item.id}, 1)" style="margin-left: 5px;">+</button>
+                            <button onclick="removeFromCart(${item.id})" style="margin-left: 10px; background-color: #dc3545; color: white; border: none; padding: 2px 6px; border-radius: 2px;">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const total = subtotal + shippingTotal;
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('shippingTotal').textContent = shippingTotal.toFixed(2);
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        // Cambiar cantidad
+        function changeQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartDisplay();
+                    displayCartItems();
+                }
+            }
+        }
+
+        // Eliminar del carrito
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartDisplay();
+            displayCartItems();
+        }
+
+        // Panel de administración
+        function toggleAdmin() {
+            isAdminMode = !isAdminMode;
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('hidden');
+            displayProducts();
+        }
+
+        // Agregar producto
+        function addProduct() {
+            const name = document.getElementById('productName').value;
+            const category = document.getElementById('productCategory').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const image = document.getElementById('productImage').value;
+
+            if (!name || !price) {
+                alert('Por favor, completa al menos el nombre y el precio');
+                return;
+            }
+
+            const newProduct = {
+                id: Date.now(),
+                name: name,
+                category: category,
+                price: price,
+                image: image || ''
+            };
+
+            products.push(newProduct);
+            displayProducts();
+
+            // Limpiar formulario
+            document.getElementById('productName').value = '';
+            document.getElementById('productPrice').value = '';
+            document.getElementById('productImage').value = '';
+
+            alert('Producto agregado correctamente');
+        }
+
+        // Eliminar producto
+        function removeProduct(productId) {
+            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+                products = products.filter(p => p.id !== productId);
+                displayProducts();
+                alert('Producto eliminado');
+            }
+        }
+
+        // Métodos de pago
+        function initPaymentMethods() {
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', function() {
+                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    const paymentInfo = document.getElementById('paymentInfo');
+                    const method = this.dataset.method;
+                    
+                    switch(method) {
+                        case 'card':
+                            paymentInfo.textContent = 'Pago seguro con tarjeta de crédito o débito';
+                            break;
+                        case 'paypal':
+                            paymentInfo.textContent = 'Serás redirigido a PayPal para completar el pago';
+                            break;
+                        case 'transfer':
+                            paymentInfo.textContent = 'Te enviaremos los datos bancarios por email';
+                            break;
+                    }
+                });
+            });
+        }
+
+        // Procesar pago
+        function processPayment() {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío');
+                return;
+            }
+
+            const selectedMethod = document.querySelector('.payment-method.selected').dataset.method;
+            const total = document.getElementById('total').textContent;
+
+            let message = `¡Pedido confirmado por €${total}!\n\n`;
+            message += `Productos:\n`;
+            
+            cart.forEach(item => {
+                message += `- ${item.name} x${item.quantity} = €${(item.price * item.quantity).toFixed(2)}\n`;
+            });
+            
+            message += `\nEnvío: €${document.getElementById('shippingTotal').textContent}`;
+            message += `\nTotal: €${total}`;
+            
+            switch(selectedMethod) {
+                case 'card':
+                    message += '\n\n🔒 Proceso de pago con tarjeta iniciado...';
+                    break;
+                case 'paypal':
+                    message += '\n\n🅿️ Redirigiendo a PayPal...';
+                    break;
+                case 'transfer':
+                    message += '\n\n🏦 Te enviaremos los datos bancarios por email';
+                    break;
+            }
+
+            alert(message);
+            
+            // Simular proceso de pago exitoso
+            setTimeout(() => {
+                alert('¡Pago procesado con éxito! Recibirás un email de confirmación.');
+                cart = [];
+                updateCartDisplay();
+                closeCart();
+            }, 2000);
+        }
+
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target === modal) {
+                closeCart();
+            }
+        }
+    </script>
+</body>
+</html>
